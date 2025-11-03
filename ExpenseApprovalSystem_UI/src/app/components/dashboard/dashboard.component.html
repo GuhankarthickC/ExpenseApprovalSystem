@@ -1,0 +1,42 @@
+<div class="dashboard-container">
+  <!-- Header -->
+  <mat-toolbar color="primary" class="dashboard-header">
+    <span class="app-title">
+      <mat-icon>receipt_long</mat-icon>
+      Expense Approval System
+    </span>
+    <span class="spacer"></span>
+    <span class="user-role">{{ userRole }}</span>
+    <button mat-raised-button color="warn" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+  </mat-toolbar>
+
+  <!-- Content Area -->
+  <div class="dashboard-content">
+    <!-- For Employees -->
+    <mat-tab-group *ngIf="isEmployee()">
+      <mat-tab label="My Submitted Expenses">
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-view-submitted></app-view-submitted>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Submit New Expense">
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-submit-expense></app-submit-expense>
+          </div>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+
+    <!-- For Approvers -->
+    <div *ngIf="isApprover()" class="approver-content">
+      <app-view-pending></app-view-pending>
+    </div>
+  </div>
+</div>
+

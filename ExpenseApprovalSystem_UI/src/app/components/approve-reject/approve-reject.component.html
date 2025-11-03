@@ -1,0 +1,32 @@
+<div class="approve-reject-container">
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Comments (Optional)</mat-label>
+      <textarea 
+        matInput 
+        formControlName="comments" 
+        placeholder="Add your comments here..."
+        rows="4"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="action-buttons">
+      <button 
+        mat-raised-button 
+        color="accent"
+        type="button" 
+        (click)="approve()">
+        <mat-icon>check_circle</mat-icon>
+        Approve
+      </button>
+      <button 
+        mat-raised-button 
+        color="warn"
+        type="button" 
+        (click)="reject()">
+        <mat-icon>cancel</mat-icon>
+        Reject
+      </button>
+    </div>
+  </form>
+</div>

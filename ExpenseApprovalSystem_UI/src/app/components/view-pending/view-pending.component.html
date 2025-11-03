@@ -1,0 +1,70 @@
+<div class="view-pending-container">
+  <h2>Pending Expenses</h2>
+  
+  <div class="table-container">
+    <table mat-table [dataSource]="expenses" *ngIf="expenses.length > 0; else noExpenses" class="mat-elevation-z2">
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>Amount</th>
+        <td mat-cell *matCellDef="let expense">{{ expense.amount | currency }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef>Category</th>
+        <td mat-cell *matCellDef="let expense">{{ expense.category }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let expense">{{ expense.description }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let expense">
+          <mat-chip [class]="'status-' + expense.status?.toLowerCase()">
+            {{ expense.status }}
+          </mat-chip>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let expense">
+          <button mat-raised-button color="primary" (click)="selectExpense(expense.id)">
+            <mat-icon>rate_review</mat-icon>
+            Review
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    
+    <ng-template #noExpenses>
+      <div class="no-data">
+        <p>No pending expenses.</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Approve/Reject Section -->
+  <div class="review-section" *ngIf="selectedExpenseId !== null">
+    <div class="review-overlay" (click)="selectedExpenseId = null"></div>
+    <div class="review-modal mat-elevation-z8">
+      <div class="modal-header">
+        <h3>Review Expense #{{ selectedExpenseId }}</h3>
+        <button mat-icon-button (click)="selectedExpenseId = null">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-approve-reject 
+          [expenseId]="selectedExpenseId" 
+          (actionComplete)="onActionComplete()">
+        </app-approve-reject>
+      </div>
+    </div>
+  </div>
+</div>
+
